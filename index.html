@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>협동조합 기사 앱</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f4f6f8;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 16px;
+}
+
+.header {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #2b7cff;
+  color: #fff;
+  font-size: 17px;
+  border: none;
+  border-radius: 14px;
+}
+
+button:active {
+  opacity: 0.8;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #888;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">🚖 협동조합 기사 앱</div>
+
+  <div class="card">
+    <h3>👤 기사 정보</h3>
+    <input id="name" class="input" placeholder="기사 이름" />
+  </div>
+
+  <div class="card">
+    <h3>💰 운행 기록</h3>
+    <input id="income" type="number" class="input" placeholder="수익 (원)" />
+    <input id="distance" type="number" class="input" placeholder="운행 거리 (km)" />
+    <input id="lpg" type="number" class="input" placeholder="LPG 금액 (원)" />
+    <button onclick="submitData()">저장</button>
+  </div>
+
+  <div class="footer">
+    입력 후 저장만 누르세요
+  </div>
+
+</div>
+
+<script>
+async function submitData() {
+  const name = document.getElementById("name").value;
+  const income = document.getElementById("income").value;
+  const distance = document.getElementById("distance").value;
+  const lpg = document.getElementById("lpg").value;
+
+  if (!name || !income) {
+    alert("기사 이름과 수익은 필수입니다");
+    return;
+  }
+
+  await fetch("https://script.google.com/macros/s/AKfycbyFjzqM-X24f16BsiBoqOe_YXFGVNjhpiVvnbtlyDTTl3opHwNCDzpirE6h0Fmt3kIx1A/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: name,
+      income: income,
+      distance: distance,
+      lpg: lpg
+    })
+  });
+
+  alert("✅ 저장 완료");
+
+  document.getElementById("income").value = "";
+  document.getElementById("distance").value = "";
+  document.getElementById("lpg").value = "";
+}
+</script>
+
+</body>
+</html>
